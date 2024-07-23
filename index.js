@@ -4,7 +4,8 @@ const app = express();
 
 const pubnub = new PubNub({
     publishKey: 'pub-c-cfee3158-378c-4920-a60c-264321565feb',
-    subscribeKey: 'sub-c-a73ecf59-d684-4f3f-9c2f-b4425f0e66bc'
+    subscribeKey: 'sub-c-a73ecf59-d684-4f3f-9c2f-b4425f0e66bc',
+     userId: "sec-c-OGI2YzU5OGItNmE5ZS00MThmLTgzYjQtODIxMDRjOGE3ZDE1"
 })
 
 app.use(express.static('public'));
