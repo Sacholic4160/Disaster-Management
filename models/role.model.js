@@ -1,9 +1,9 @@
-const { DataType } = require('sequelize')
+const { DataTypes } = require('sequelize')
 const sequelize = require('../config/db.js')
 
 const Role = sequelize.define('Role', {
         name : {
-        type : DataType.STRING,
+        type : DataTypes.STRING,
         allowNull: false,
         unique: true
 
