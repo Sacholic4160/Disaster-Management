@@ -1,18 +1,18 @@
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Real-Time Rider Tracking</title>
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Correct Google Maps JavaScript API URL -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANOycdiGxfcJzZfr2MWVc91cQlBlOPSv0"></script>
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.28.1.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  
-
 </head>
 <body>
-    <h1 style="margin-left: 40%;">Real-Time Rider Tracking</h1>
-    <input type="text" id="name" placeholder="type your name..."/>
-    <button id="start-tracking">Start Tracking</button>
+    <h1 style="text-align: center;">Real-Time Rider Tracking</h1>
+    <div style="text-align: center;">
+        <input type="text" id="name" placeholder="Type your name..." />
+        <button id="start-tracking">Start Tracking</button>
+    </div>
     <div id="map" style="width: 100%; height: 600px;"></div>
     <script src="/scripts/script.js"></script>
 </body>
