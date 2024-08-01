@@ -2,7 +2,10 @@ const express = require('express');
 const PubNub = require('pubnub');
 const sequelize = require('./config/db.js');
 const path = require('path');
-const Rider = require('./models/rider.model.js')
+const Rider = require('./models/disaster.model.js')
+const userRoutes = require('./controllers/user.controller.js')
+const verifyJwt = require('./middlewares/auth.middleware.js')
+const morgan = require('morgan');
 
 const app = express();
 
@@ -18,7 +21,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
+
+app.use(morgan('combined'));
 sequelize.sync();
+
+app.use('/user', userRoutes)
 
 app.get('/', (req, res) => {
     res.render('index');
@@ -28,11 +35,11 @@ app.post('/update-location', async (req, res) => {
     const { name, latitude, longitude } = req.body;
     try {
         const location = await Rider.create({ name, latitude, longitude });
-        console.log('updated location:',location);
         pubnub.publish({
             channel: 'rider-locations',
             message: { name, latitude, longitude }
         });
+        console.log('pubnub',pubnub)
         res.status(200).send(location);
     } catch (error) {
         res.status(500).send(error.message);
@@ -43,7 +50,6 @@ app.post('/update-location', async (req, res) => {
 app.get('/locations', async (req, res) => {
     try {
         const locations = await Rider.findAll();
-        console.log('all locations: ',locations);
         res.status(200).send(locations);
     } catch (error) {
         res.status(500).send(error.message);
