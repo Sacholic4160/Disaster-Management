@@ -1,10 +1,10 @@
 const express = require('express');
 const PubNub = require('pubnub');
-const sequelize = require('./config/db.js');
+const sequelize = require('./src/api/v1/config/db.js');
 const path = require('path');
-const Rider = require('./models/disaster.model.js')
-const userRoutes = require('./controllers/user.controller.js')
-const verifyJwt = require('./middlewares/auth.middleware.js')
+const Rider = require('./src/api/v1/models/disaster.model.js')
+const userRoutes = require('./src/api/v1/controllers/user.controller.js')
+const verifyJwt = require('./src/api/v1/middlewares/auth.middleware.js')
 const morgan = require('morgan');
 
 const app = express();
@@ -39,7 +39,7 @@ app.post('/update-location', async (req, res) => {
             channel: 'rider-locations',
             message: { name, latitude, longitude }
         });
-        console.log('pubnub',pubnub)
+        console.log('pubnub', pubnub)
         res.status(200).send(location);
     } catch (error) {
         res.status(500).send(error.message);
