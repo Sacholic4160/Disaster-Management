@@ -3,11 +3,25 @@ const PubNub = require('pubnub');
 const sequelize = require('./src/api/v1/config/db.js');
 const path = require('path');
 const Rider = require('./src/api/v1/models/disaster.model.js')
-const userRoutes = require('./src/api/v1/controllers/user.controller.js')
+const userRoutes = require('./src/api/v1/routes/user.route.js')
+const disasterRoutes = require('./src/api/v1/routes/disaster.route.js')
 const verifyJwt = require('./src/api/v1/middlewares/auth.middleware.js')
 const morgan = require('morgan');
+const redisClient = require('./src/api/v1/config/redis.js');
+const session = require('express-session');
+const redisStore = require('connect-redis').default
+
+
 
 const app = express();
+
+app.use(session({
+    store: new redisStore({client: redisClient}),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV === 'production'}
+}))
 
 const pubnub = new PubNub({
     publishKey: 'pub-c-cfee3158-378c-4920-a60c-264321565feb',
@@ -26,6 +40,7 @@ app.use(morgan('combined'));
 sequelize.sync();
 
 app.use('/user', userRoutes)
+app.use('/disaster', disasterRoutes)
 
 app.get('/', (req, res) => {
     res.render('index');
