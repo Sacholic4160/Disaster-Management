@@ -1,6 +1,6 @@
-const { DataTypes } = require('sequelize')
-const sequelize = require('../config/db.js')
-//const User = require('./user.model.js')
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db.js');
+const User = require('./user.model.js');
 
 const Disaster = sequelize.define('Disaster', {
   id: {
@@ -18,9 +18,29 @@ const Disaster = sequelize.define('Disaster', {
   status: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  location: {
+    type: DataTypes.GEOMETRY('POINT'),
+    allowNull: false,
+  },
+  photo: {
+    type: DataTypes.STRING, // URL to the photo
+  },
+  video: {
+    type: DataTypes.STRING, // URL to the video
+  },
+  informerId: {
+    type: DataTypes.UUID,
+    references: {
+      model: 'Users',
+      key: 'id',
+    },
+    allowNull: false,
   }
-})
+});
 
+// Set up the association
+User.hasMany(Disaster, { foreignKey: 'informerId' });
+Disaster.belongsTo(User, { foreignKey: 'informerId' });
 
-
-module.exports = Disaster
+module.exports = Disaster;
