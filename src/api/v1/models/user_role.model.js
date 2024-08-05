@@ -5,14 +5,14 @@ const Role = require('./role.model');
 
 const UserRole = sequelize.define('UserRole', {
   userId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     references: {
       model: User,
       key: 'id'
     }
   },
   roleId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     references: {
       model: Role,
       key: 'id'
