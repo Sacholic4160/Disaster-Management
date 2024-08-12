@@ -5,22 +5,27 @@ const User = require('./user.model.js');
 
 const Message = sequelize.define('Message', {
   id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
+      type: DataTypes.UUID, 
+      defaultValue: DataTypes.UUIDV4, 
+      primaryKey: true
   },
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false,
+  text: DataTypes.STRING,
+  mediaUrl: DataTypes.STRING,  // URL for photos, videos
+  senderId: {
+      type: DataTypes.UUID,
+      references: {
+          model: 'Users',
+          key: 'id'
+      }
   },
-  sender: {
-    references: {
-      model: User,
-      key: 'id'
-    },
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+  channelId: {
+      type: DataTypes.UUID,
+      references: {
+          model: 'Channels',
+          key: 'id'
+      }
+  }
 });
+
 
 module.exports = Message;
