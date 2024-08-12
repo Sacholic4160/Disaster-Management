@@ -78,8 +78,7 @@ const updateDisaster = async (req, res, pubnub) => {
             else console.log(`message sent successfully!: ${response}`)
         })
 
-        res.status(200).json(updateDisaster, 'disaster updated successfully!')
-
+        res.status(200).json({data: updateDisaster, message:'disaster updated successfully!'})
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -91,11 +90,11 @@ const getDisasters = async (req, res) => {
 
         if (!disasters) throw new error('no disasters are present!');
 
-        res.status(200).json(disasters, 'disasters found!');
+        res.status(200).json({  message: 'disasters found!', data: disasters});
 
 
     } catch (error) {
-        throw new error(error.message);
+        res.status(500).json(error.message)
     }
 }
 
@@ -108,11 +107,11 @@ const getDisasterById = async (req, res) => {
 
         if (!disaster) throw new error('no disaster is present for this id!');
 
-        res.status(200).json(disaster, 'disaster found!');
+        res.status(200).json({data:disaster, message:'disaster found!'});
 
 
     } catch (error) {
-        throw new error(error.message);
+        res.status(500).json(error.message)
     }
 }
 
@@ -120,6 +119,7 @@ const getDisastersNearYou = async (req, res) => {
     try {
 
         const { latitude, longitude, radius } = req.body;
+        console.log(latitude,longitude,radius)
 
         if (!(latitude || longitude)) throw new error('latitude and longitude are required!');
 
@@ -135,9 +135,10 @@ const getDisastersNearYou = async (req, res) => {
             )
 
         })
-        if (disasters.length == 0) res.status(200).json('no disaster found in this radius near you!');
+     //   console.log(disasters)
+        if (disasters.length == 0) res.status(200).json({message:'no disaster found in this radius near you!'});
 
-        res.status(200).json(disasters, 'disaster near you')
+        res.status(200).json({data: disasters, message:'disaster near you'})
 
 
 
