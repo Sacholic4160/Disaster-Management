@@ -31,10 +31,11 @@ const registerUser = async (req, res) => {
 
     } catch (error) {
         const message = error.message;
-        console.log(message,error);
+        console.log(message, error);
         res.status(500).json({ message: 'User creation failed' });
     }
 };
+
 const loginUser = async (req, res) => {
     try {
         const errors = validationResult(req);
@@ -52,21 +53,24 @@ const loginUser = async (req, res) => {
         const token = jwt.sign({ userId: user.id, email, role: user.role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRY });
 
         // Ensure the Redis client is ready before using it
-        if (!redisClient.isOpen) {
+        if (!redisClient.status === 'ready') {
             await redisClient.connect();
         }
 
-        const redis = await redisClient.set(`authToken:${user.id}`, token, 'EX', process.env.ACCESS_TOKEN_EXPIRY);
-        //console.log('redis', redis)
+        await redisClient.set(`authToken:${user.id}`, token, 'EX', 600000);
+
         if (user) {
             sendMail(user);
         }
-        
+
         res.json(token);
     } catch (error) {
         const message = error.message;
         console.log(message);
+        console.log(error);
         res.status(500).json({ message: 'User login failed' });
     }
 };
+
 module.exports = { registerUser, loginUser };
+
