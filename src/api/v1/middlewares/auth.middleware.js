@@ -25,7 +25,7 @@ const verifyJwt = async (req, res, next) => {
       if (result !== token) {
         return res.status(401).json({ error: 'Invalid token' });
       }
-     // console.log('result:', result);
+      //console.log('result:', result);
 
       req.userId = decoded.userId;
       req.userRole = decoded.role;
