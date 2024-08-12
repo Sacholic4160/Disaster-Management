@@ -6,7 +6,7 @@ const upload = require('../middlewares/multer.middleware');
 const router = express.Router();
 
 
-router.post('/add', verifyJwt, upload.single('photo'), validateAddDisaster, addDisaster)
+router.post('/add', verifyJwt, upload.single('photo'), validateAddDisaster, (req, res) => addDisaster(req, res, req.pubnub))
 
 //router.post('/login', validateLogin, loginUser)
 
