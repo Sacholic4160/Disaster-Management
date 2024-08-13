@@ -5,7 +5,6 @@ const path = require('path');
 const Rider = require('./src/api/v1/models/disaster.model.js')
 const userRoutes = require('./src/api/v1/routes/user.route.js')
 const disasterRoutes = require('./src/api/v1/routes/disaster.route.js')
-const verifyJwt = require('./src/api/v1/middlewares/auth.middleware.js')
 const morgan = require('morgan');
 const redisClient = require('./src/api/v1/config/redis.js');
 const session = require('express-session');
@@ -40,7 +39,10 @@ app.use(morgan('combined'));
 sequelize.sync();
 
 app.use('/user', userRoutes)
-app.use('/disaster', disasterRoutes)
+app.use('/disaster', (req, res, next) => {
+    req.pubnub = pubnub;
+    next();
+} , disasterRoutes)
 
 app.get('/', (req, res) => {
     res.render('index');
