@@ -24,7 +24,8 @@ const registerUser = async (req, res) => {
             location: {
                 type: 'Point',
                 coordinates: location.coordinates
-            }
+            },
+            postal_code
         });
 
         res.status(201).json(user);
