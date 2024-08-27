@@ -23,7 +23,7 @@ const createPersonalChannel = async(senderId, recieverId) =>{
  }
  return channel;
   } catch (err) {
-    throw new error(err.message)
+    throw new err(err.message)
   }
 }
 
