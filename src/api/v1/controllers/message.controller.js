@@ -24,7 +24,7 @@ const sendMessage = async (req, res, pubnub) => {
             const channel = await Channel.findOne({ where: { groupId: messageDetails.groupId, isGroup: true } });
             if (!channel) return res.status(404).json({ message: "Group with this id not found" })
             channelId = channel.id;
-            pubnubChannel = `group_${groupId}`;
+            pubnubChannel = `groupChat_${groupId}`;
         }
         else {
             //sending to a person
@@ -32,7 +32,7 @@ const sendMessage = async (req, res, pubnub) => {
             const channel = createPersonalChannel(senderId, messageDetails.recieverId);
 
             channelId = channel.id;
-            pubnubChannel = `direct_${senderId}_${receiverId}`;
+            pubnubChannel = `Chat_${senderId}_${receiverId}`;
 
         }
 
