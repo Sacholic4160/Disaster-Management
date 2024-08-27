@@ -25,7 +25,7 @@ const User = sequelize.define('User', {
     role: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 'rider'
+        defaultValue: 'user '
     },
     phone: {
         type: DataTypes.STRING,
@@ -34,6 +34,10 @@ const User = sequelize.define('User', {
     location: {
         type: DataTypes.GEOMETRY('POINT'),
         allowNull: false
+    },
+    postal_code: {
+        type: DataTypes.STRING,
+        allowNull:false
     }
 })
 
