@@ -36,7 +36,11 @@ const Disaster = sequelize.define('Disaster', {
       key: 'id',
     },
     allowNull: false,
-  }
+  },
+  postal_code: {
+    type: DataTypes.STRING,
+    allowNull:false
+}
 });
 
 // Set up the association
