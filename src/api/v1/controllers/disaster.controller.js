@@ -1,9 +1,7 @@
 const { validationResult } = require("express-validator");
 const Disaster = require("../models/disaster.model");
-const { response } = require("express");
 const { Sequelize } = require("sequelize");
-
-
+const { alertUsersNearDisaster } = require("./alert.controller");
 
 
 const addDisaster = async (req, res, pubnub) => {
@@ -25,16 +23,18 @@ const addDisaster = async (req, res, pubnub) => {
             },
             status,
             photo: fileUrl,
-            informerId: req.userId
+            informerId: req.userId,
+            postal_code
         })
+        alertUsersNearDisaster(disaster);
         const disaster = await data.save();
 
         pubnub.publish({
-            channel: 'disasters',
+            channel: `postalCode_${postal_code}`,
             message: disaster
         }, (status, response) => {
             if (status.error) {
-                throw new error(`pubnub error: ${status.error}`)
+                throw new errors(`pubnub error: ${status.error}`)
             }
             else {
                 console.log(`pubnub success: ${response}`)
@@ -71,10 +71,10 @@ const updateDisaster = async (req, res, pubnub) => {
         const updateDisaster = await disaster.update(updates);
 
         pubnub.publish({
-            channel: 'disaster',
+            channel: `postalCode_${disaster.postal_code}`,
             message: updateDisaster,
         }, (status, response) => {
-            if (status.error) throw new error(status.error)
+            if (status.error) throw new errors(status.error)
             else console.log(`message sent successfully!: ${response}`)
         })
 
@@ -119,7 +119,7 @@ const getDisastersNearYou = async (req, res) => {
     try {
 
         const { latitude, longitude, radius } = req.body;
-        console.log(latitude,longitude,radius)
+       // console.log(latitude, longitude, radius)
 
         if (!(latitude || longitude)) throw new error('latitude and longitude are required!');
 
