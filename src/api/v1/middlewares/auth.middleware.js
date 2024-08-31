@@ -21,7 +21,7 @@ const verifyJwt = async (req, res, next) => {
      // console.log('decoded token: ', decoded);
 
       // Check if the token exists in Redis
-      const result = await redisClient.get(`authToken:${decoded.userId}`);
+      const result = await redisClient.get(`authToken:${decoded.id}`);
       if (result !== token) {
         return res.status(401).json({ error: 'Invalid token' });
       }
