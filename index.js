@@ -3,8 +3,9 @@ const PubNub = require('pubnub');
 const sequelize = require('./src/api/v1/config/db.js');
 const path = require('path');
 const Rider = require('./src/api/v1/models/disaster.model.js')
-const userRoutes = require('./src/api/v1/routes/user.route.js')
+const userRoutes = require('./src/api/v1/routes/auth.route.js')
 const disasterRoutes = require('./src/api/v1/routes/disaster.route.js')
+const adminRoute = require('./src/api/v1/routes/admin.route.js')
 const morgan = require('morgan');
 const redisClient = require('./src/api/v1/config/redis.js');
 const session = require('express-session');
@@ -38,6 +39,7 @@ app.use(morgan('combined'));
 sequelize.sync();
 
 app.use('/user', userRoutes)
+app.use('/admin', adminRoute)
 app.use('/disaster', (req, res, next) => {
     req.pubnub = pubnub;
     next();
