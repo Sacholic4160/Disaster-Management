@@ -3,6 +3,11 @@ const sequelize = require('../config/db');
 const User = require('./user.model');
 
 const UserPermission = sequelize.define('UserPermission', {
+    id : {
+         type: DataTypes.UUID,
+         defaultValue: DataTypes.UUIDV4,
+         primaryKey: true
+    },
     user_id: {
         type: DataTypes.UUID,
         references: {
@@ -10,11 +15,10 @@ const UserPermission = sequelize.define('UserPermission', {
             key: 'id'
         }
     },
-    permission: {
-        type: DataTypes.JSONB, // Store permissions as JSONB to handle arrays
-        allowNull: false,
-        defaultValue: []
-    }
+    permission: [{
+        permission_name: DataTypes.STRING,
+        permission_value: DataTypes.ARRAY(DataTypes.INTEGER) // 0 -> create , 1 -> edit , 2 -> read , 3 -> delete
+    }]
 });
 
 
