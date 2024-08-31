@@ -20,7 +20,7 @@ const routerPermission = sequelize.define('routePermission', {
     }
   },
   permission: {
-    type: DataTypes.ARRAY(DataTypes.STRING), // Example: An array of strings or integers
+    type: DataTypes.ARRAY(DataTypes.INTEGER), // Example: An array of strings or integers
     allowNull: false
   }
 });
