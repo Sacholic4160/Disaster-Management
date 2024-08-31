@@ -22,7 +22,7 @@ const Volunteer = sequelize.define('Volunteer', {
   userId: {
     type: DataTypes.UUID,
     references: {
-      model: 'User',
+      model: 'Users',
       key: 'id',
     },
     allowNull: false, // Ensures that every Volunteer must be associated with a User
