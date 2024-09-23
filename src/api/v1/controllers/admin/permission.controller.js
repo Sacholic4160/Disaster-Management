@@ -70,7 +70,8 @@ const getPermission = async (req, res) => {
 const updatePermission = async (req, res) => {
     try {
 
-        const { permission_name, is_default } = req.body;
+        let { permission_name, is_default } = req.body;
+
         const isExists = await Permission.findByPk(req.params.id);
 
         if (!isExists) return res.status(404).json({ message: 'permission not found!' });
@@ -85,6 +86,7 @@ const updatePermission = async (req, res) => {
                 }
             }
         })
+        console.log(isNameAssigned)
 
         if (isNameAssigned) return res.status(400).json({ message: 'permission name already assigned!' });
 
@@ -92,8 +94,15 @@ const updatePermission = async (req, res) => {
 
         const updatedPermission = await Permission.update({
             permission_name: permission_name,
-            is_default: is_default
-        })
+            is_default: is_default,
+
+        },
+            {
+
+                where: { id: req.params.id }
+            })
+
+
 
         return res.status(200).json({ message: 'permission updated successfully!', data: updatedPermission });
 
