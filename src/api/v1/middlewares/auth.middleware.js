@@ -12,7 +12,7 @@ const verifyJwt = async (req, res, next) => {
       return res.status(401).json({ error: "Unauthorized request: No token provided" });
     }
 
-    console.log(`Token: ${token}`);
+   // console.log(`Token: ${token}`);
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {
       if (err) {
@@ -30,7 +30,7 @@ const verifyJwt = async (req, res, next) => {
       // req.userId = decoded.id;
       // req.userRole = decoded.role;
       req.user = decoded
-      console.log('user:', req.user);
+      //console.log('user:', req.user);
 
       next();
     });
