@@ -10,13 +10,13 @@ const getUserPermissions = async (user_id) => {
             where: {id : user_id},
             include: {
                 model: UserPermission,
-                as: 'permissions',
-                attributes: [permission]
+               // as: 'permissions',
+                attributes: ['permission']
             },
-            attributes: [id, role, name, email, password]
+            attributes: ['id', 'role', 'userName', 'email']
         })
 
-        console.log(userWithPermission);
+       // console.log('userWithPermission: ', userWithPermission );
         return userWithPermission
 
     } catch (error) {
@@ -26,6 +26,7 @@ const getUserPermissions = async (user_id) => {
 }
 
 const getRouterPermission = async(router, role) => {
+    console.log(router, role)
     try {
         const routePermission = await routerPermission.findOne({
             where: {
@@ -34,7 +35,7 @@ const getRouterPermission = async(router, role) => {
             },
             include: Permission
         })
-
+        console.log('routePermission: ', routePermission );
         if(routePermission) return routePermission
     } catch (error) {
         throw error
