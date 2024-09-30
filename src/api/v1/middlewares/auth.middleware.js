@@ -12,13 +12,13 @@ const verifyJwt = async (req, res, next) => {
       return res.status(401).json({ error: "Unauthorized request: No token provided" });
     }
 
-    //console.log(`Token: ${token}`);
+    console.log(`Token: ${token}`);
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {
       if (err) {
         return res.status(500).json({ error: `Failed to authenticate token: ${err.message}` });
       }
-     // console.log('decoded token: ', decoded);
+     //console.log('decoded token: ', decoded);
 
       // Check if the token exists in Redis
       const result = await redisClient.get(`authToken:${decoded.id}`);
@@ -26,10 +26,11 @@ const verifyJwt = async (req, res, next) => {
         return res.status(401).json({ error: 'Invalid token' });
       }
       //console.log('result:', result);
-
-      req.userId = decoded.userId;
-      req.userRole = decoded.role;
-     // console.log('userId and userRole:', req.userId,req.userRole);
+ 
+      // req.userId = decoded.id;
+      // req.userRole = decoded.role;
+      req.user = decoded
+      console.log('user:', req.user);
 
       next();
     });
