@@ -15,7 +15,8 @@ const Permission = sequelize.define('Permission', {
   is_default: {
     type: DataTypes.INTEGER,
     defaultValue: 0
-  }
+  },
+  
 });
 
 module.exports = Permission;
