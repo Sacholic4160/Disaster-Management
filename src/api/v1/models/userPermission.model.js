@@ -15,10 +15,14 @@ const UserPermission = sequelize.define('UserPermission', {
             key: 'id'
         }
     },
-    permission: [{
-        permission_name: DataTypes.STRING,
-        permission_value: DataTypes.ARRAY(DataTypes.INTEGER) // 0 -> create , 1 -> edit , 2 -> read , 3 -> delete
-    }]
+    // permission: [{
+    //     permission_name: DataTypes.STRING,
+    //     permission_value: DataTypes.ARRAY(DataTypes.INTEGER) // 0 -> create , 1 -> edit , 2 -> read , 3 -> delete
+    // }]
+    permission: {
+        type: DataTypes.JSONB, // Use JSONB to store an array of objects
+        allowNull: false
+    }
 });
 
 
