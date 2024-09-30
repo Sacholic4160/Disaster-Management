@@ -4,7 +4,7 @@ const sequelize = new Sequelize('Real-Time-Location','postgres',
     'Fablo@143', {
         host: 'localhost',
         dialect: 'postgres',
-        logging: false // Set to false to disable logging
+        logging: console.log // Set to false to disable logging
     }
 )
 
