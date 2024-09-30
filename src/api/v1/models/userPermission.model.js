@@ -29,7 +29,7 @@ const UserPermission = sequelize.define('UserPermission', {
 // A User has many permissions
 User.hasMany(UserPermission, {
     foreignKey: 'user_id', // This is the foreign key in the UserPermission model
-    as: 'permissions' // This is the alias for the relation
+  //  as: 'permissions' // This is the alias for the relation
 });
 
 // A UserPermission belongs to a User
