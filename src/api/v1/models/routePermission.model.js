@@ -8,12 +8,12 @@ const routerPermission = sequelize.define('routePermission', {
     allowNull: false
   },
   role: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false
   },
   Permission_id: {
     type: DataTypes.UUID,
-    allowNull: false,
+    //allowNull: false,
     references: {
       model: Permission,
       key: 'id'
@@ -21,7 +21,7 @@ const routerPermission = sequelize.define('routePermission', {
   },
   permission: {
     type: DataTypes.ARRAY(DataTypes.INTEGER), // Example: An array of strings or integers
-    allowNull: false
+   // allowNull: false
   }
 });
 
