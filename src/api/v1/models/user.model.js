@@ -32,7 +32,7 @@ const User = sequelize.define('User', {
         allowNull: false
     },
     location: {
-        type: DataTypes.GEOMETRY('POINT'),
+        type: DataTypes.GEOMETRY('POINT',4326),
         allowNull: false
     },
     postal_code: {
