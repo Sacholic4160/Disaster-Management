@@ -6,7 +6,7 @@ const Permission = require('../../models/permission.model');
 const createPermission = async (req, res) => {
     try {
         let { permission_name, is_default } = req.body;
-        console.log(permission_name, is_default);
+        console.log(req.userId, req.userRole);
 
         if (!permission_name) {
             return res.status(400).json({ message: 'Name of the permission is required!' });
