@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import {Link, useNavigate} from 'react-router-dom'
+import {useForm} from 'react-hook-form'
 
-function signup() {
+function Signup() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [ error, setError ] = useState()
+    const {register, handleSibmit } = useForm
   return (
     <div>
       
@@ -8,4 +15,4 @@ function signup() {
   )
 }
 
-export default signup
+export default Signup
